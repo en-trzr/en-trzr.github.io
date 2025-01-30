@@ -1,0 +1,38 @@
+# .readthedocs.yaml
+
+# Specifies the version of the config file format
+version: 2
+
+# Python configuration block
+python:
+  version: 3.8  # Specify the Python version
+  install:
+    - requirements: requirements.txt  # Install dependencies from a requirements file
+    - method: pip  # Use pip to install the dependencies
+
+# Sphinx configuration block
+sphinx:
+  configuration: docs/conf.py  # Specify the location of your Sphinx config file
+
+# Output configuration for the generated docs
+output:
+  html:
+    theme: sphinx_rtd_theme  # Set the theme for HTML output (default: sphinx_rtd_theme)
+  pdf:
+    latex: true  # Enable LaTeX-based PDF generation (optional)
+
+# Optional build steps (e.g., running tests or additional commands before building docs)
+build:
+  image: python:3.8  # Optional: Specify a Docker image to build in
+  steps:
+    - run:
+        name: Install dependencies
+        command: pip install -r requirements.txt
+    - run:
+        name: Build documentation
+        command: sphinx-build -b html docs/ build/
+
+# Environment variables, if needed during the build process
+env:
+  global:
+    - MY_CUSTOM_VAR=value  # Set custom environment variables if needed
